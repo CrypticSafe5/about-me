@@ -8,6 +8,20 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader']
+      }, {
+        test: /\.less$/,
+        use: [
+          {
+            loader: 'style-loader',
+          }, {
+            loader: 'css-loader', // translates CSS into CommonJS
+          }, {
+            loader: 'less-loader', // compiles Less to CSS
+          }
+        ]
+      }, {
+        test: /\.css$/i,
+        loader: ['style-loader', 'css-loader'], // translates CSS into CommonJS
       }
     ]
   },
@@ -15,9 +29,9 @@ module.exports = {
     extensions: ['*', '.js', '.jsx']
   },
   output: {
-    path: __dirname + '/dist',
+    path: `${__dirname}/dist`,
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: 'main.js'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin()
