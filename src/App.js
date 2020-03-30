@@ -1,8 +1,17 @@
 import React from 'react';
 import { Menu } from 'antd';
 import 'antd/dist/antd.css';
-import { Layout } from 'antd';
-import { Card } from 'antd';
+import {
+    Layout,
+    Card
+} from 'antd';
+import {
+    GithubOutlined,
+    LinkedinOutlined,
+    MailOutlined,
+    BulbOutlined,
+    BulbFilled
+} from '@ant-design/icons';
 
 import Bio from './screens/Bio';
 import Blog from './screens/Blog';
@@ -12,19 +21,38 @@ import Contact from './screens/Contact';
 
 const { Header, Footer, Sider, Content } = Layout;
 
+
+/*
+<BulbOutlined />
+<BulbFilled />
+*/
+
+
+
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            view: 'bio'
+            view: 'bio',
+            dark: false
         };
-        this.screens = ['bio', 'portfolio', 'visits', 'blog', 'contact'];
+        this.screens = ['bio', 'portfolio', 'visits', 'blog'];
+        this.contact = ['github', 'linkedin', 'email'];
 
-        this.appBarNavButtons = this.appBarNavButtons.bind(this);
+        this.menuButtonActions = this.menuButtonActions.bind(this);
     }
 
-    appBarNavButtons(e) {
-        if (this.state.view !== e.key) {
+    menuButtonActions(e) {
+        console.log('EVENT: ', e.key);
+        if (this.contact.includes(e.key)) {
+            console.log('perform some action');
+        } else if (e.key === 'darkMode' || e.key === 'lightMode') {
+            this.setState((state) => {
+                return {
+                    dark: !state.dark
+                };
+            });
+        } else if (this.state.view !== e.key) {
             this.setState({ view: e.key });
         }
     }
@@ -33,10 +61,11 @@ class App extends React.Component {
         return (
             <div>
                 <Menu
-                    onClick={this.appBarNavButtons}
+                    onClick={this.menuButtonActions}
                     selectedKeys={this.state.view}
                     mode='horizontal'
                     style={{ width: '100%' }}
+                    theme={(this.state.dark) ? 'dark' : 'light'}
                 >
                     {
                         this.screens.map((e) => {
@@ -49,27 +78,64 @@ class App extends React.Component {
                             );
                         })
                     }
+                    <Menu.Item
+                        key={'github'}
+                    >
+                        <GithubOutlined />
+                    </Menu.Item>
+                    <Menu.Item
+                        key={'linkedin'}
+                    >
+                        <LinkedinOutlined />
+                    </Menu.Item>
+                    <Menu.Item
+                        key={'email'}
+                    >
+                        <MailOutlined />
+                    </Menu.Item>
+                    {(this.state.dark) && (
+                        <Menu.Item
+                            key={'lightMode'}
+                        >
+                            <BulbOutlined />
+                        </Menu.Item>
+                    )}
+                    {(!this.state.dark) && (
+                        <Menu.Item
+                        key={'darkMode'}
+                    >
+                        <BulbFilled />
+                    </Menu.Item>
+                    )}
                 </Menu>
                 <Card
+                    bordered={false}
                     style={{
                         width: '-64px',
-                        margin: '32px'
+                        margin: '32px',
+                        color: (this.state.dark) && '#ffffff',
+                        backgroundColor: (this.state.dark) && '#001529'
                     }}
                 >
                     {(this.state.view === 'bio') && (
-                        <Bio />
+                        <Bio
+                            dark={this.state.dark}
+                        />
                     )}
                     {(this.state.view === 'portfolio') && (
-                        <Portfolio />
+                        <Portfolio
+                            dark={this.state.dark}
+                        />
                     )}
                     {(this.state.view === 'visits') && (
-                        <Visits />
+                        <Visits
+                            dark={this.state.dark}
+                        />
                     )}
                     {(this.state.view === 'blog') && (
-                        <Blog />
-                    )}
-                    {(this.state.view === 'contact') && (
-                        <Contact />
+                        <Blog
+                            dark={this.state.dark}
+                        />
                     )}
                 </Card>
             </div>
