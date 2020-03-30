@@ -17,17 +17,6 @@ import Bio from './screens/Bio';
 import Blog from './screens/Blog';
 import Portfolio from './screens/Portfolio';
 import Visits from './screens/Visits';
-import Contact from './screens/Contact';
-
-const { Header, Footer, Sider, Content } = Layout;
-
-
-/*
-<BulbOutlined />
-<BulbFilled />
-*/
-
-
 
 class App extends React.Component {
     constructor(props) {
@@ -37,15 +26,19 @@ class App extends React.Component {
             dark: false
         };
         this.screens = ['bio', 'portfolio', 'visits', 'blog'];
-        this.contact = ['github', 'linkedin', 'email'];
+        this.contact = ['github', 'linkedin'];
 
         this.menuButtonActions = this.menuButtonActions.bind(this);
     }
 
     menuButtonActions(e) {
-        console.log('EVENT: ', e.key);
         if (this.contact.includes(e.key)) {
             console.log('perform some action');
+            if (e.key === 'github') {
+                window.open('https://github.com/CrypticSafe5', '_blank');
+            } else if (e.key === 'linkedin') {
+                window.open('https://www.linkedin.com/in/wesley-brackett-6a8abb11a/', '_blank');
+            }
         } else if (e.key === 'darkMode' || e.key === 'lightMode') {
             this.setState((state) => {
                 return {
@@ -88,11 +81,6 @@ class App extends React.Component {
                     >
                         <LinkedinOutlined />
                     </Menu.Item>
-                    <Menu.Item
-                        key={'email'}
-                    >
-                        <MailOutlined />
-                    </Menu.Item>
                     {(this.state.dark) && (
                         <Menu.Item
                             key={'lightMode'}
@@ -118,24 +106,16 @@ class App extends React.Component {
                     }}
                 >
                     {(this.state.view === 'bio') && (
-                        <Bio
-                            dark={this.state.dark}
-                        />
+                        <Bio />
                     )}
                     {(this.state.view === 'portfolio') && (
-                        <Portfolio
-                            dark={this.state.dark}
-                        />
+                        <Portfolio />
                     )}
                     {(this.state.view === 'visits') && (
-                        <Visits
-                            dark={this.state.dark}
-                        />
+                        <Visits />
                     )}
                     {(this.state.view === 'blog') && (
-                        <Blog
-                            dark={this.state.dark}
-                        />
+                        <Blog />
                     )}
                 </Card>
             </div>
