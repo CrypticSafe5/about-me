@@ -53,9 +53,7 @@ class App extends React.Component {
                 <Card
                     style={{
                         width: '-64px',
-                        marginRight: '32px',
-                        marginLeft: '32px',
-                        marginTop: '32px'
+                        margin: '32px'
                     }}
                 >
                     {(this.state.view === 'bio') && (
