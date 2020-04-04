@@ -8,7 +8,6 @@ import {
 import {
     GithubOutlined,
     LinkedinOutlined,
-    MailOutlined,
     BulbOutlined,
     BulbFilled
 } from '@ant-design/icons';
@@ -101,7 +100,7 @@ class App extends React.Component {
                     style={{
                         width: '-64px',
                         margin: '32px',
-                        color: (this.state.dark) && '#ffffff',
+                        color: (this.state.dark) && '#bbbbbb',
                         backgroundColor: (this.state.dark) && '#001529'
                     }}
                 >
